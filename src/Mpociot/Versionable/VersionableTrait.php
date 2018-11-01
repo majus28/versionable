@@ -129,7 +129,7 @@ trait VersionableTrait
         if ($id) {
             $model = $model->where('version_id', '<', $id);
         }
-        return $model->latest()->limit(1)->first();
+        return $model->latest('updated_at')->limit(1)->first();
     }
 
     /**
@@ -269,6 +269,6 @@ trait VersionableTrait
 
     public function updateVersion()
     {
-        $this->versions()->update(['is_active' => 'No']);
+        $this->versions()->where('is_active', 'Yes')->update(['is_active' => 'No']);
     }
 }
